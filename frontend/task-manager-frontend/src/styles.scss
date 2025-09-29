@@ -1,0 +1,74 @@
+/* Global styles for Task Manager Application */
+
+html, body { 
+  height: 100%; 
+  margin: 0; 
+  font-family: 'Inter', 'Roboto', "Helvetica Neue", sans-serif; 
+}
+
+body { 
+  background: #f8fafc;
+  color: #334155;
+  line-height: 1.6;
+}
+
+/* Custom Material theme overrides for confidence-inspiring design */
+.mat-mdc-button.mat-primary {
+  --mdc-filled-button-container-color: #4f46e5;
+  --mdc-filled-button-label-text-color: white;
+}
+
+.mat-mdc-button.mat-primary:hover {
+  --mdc-filled-button-container-color: #4338ca;
+}
+
+.mat-mdc-fab.mat-primary {
+  --mdc-fab-container-color: #4f46e5;
+  --mdc-fab-icon-color: white;
+}
+
+.mat-mdc-fab.mat-primary:hover {
+  --mdc-fab-container-color: #4338ca;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f5f9;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #94a3b8;
+}
+
+/* Smooth transitions */
+* {
+  transition: color 0.2s ease, background-color 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+/* Focus styles for accessibility */
+.mat-mdc-button:focus,
+.mat-mdc-icon-button:focus,
+.mat-mdc-fab:focus {
+  outline: 2px solid #4f46e5;
+  outline-offset: 2px;
+}
+
+/* Success and error message styling */
+.success-snackbar {
+  --mdc-snackbar-container-color: #059669 !important;
+  --mdc-snackbar-supporting-text-color: white !important;
+}
+
+.error-snackbar {
+  --mdc-snackbar-container-color: #dc2626 !important;
+  --mdc-snackbar-supporting-text-color: white !important;
+}
