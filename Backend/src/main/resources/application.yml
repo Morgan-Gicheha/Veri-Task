@@ -18,7 +18,7 @@ jwt:
 
 # CORS Configuration
 cors:
-  allowed-origins: http://localhost:4200
+  allowed-origins: https://morgan-gicheha.com,http://localhost:4200
 
 # Logging Configuration
 logging:
