@@ -20,7 +20,7 @@ echo "  ✅ Redis is ready!"
 
 # Wait for Backend to be ready
 echo "  - Checking Backend..."
-while ! curl -f http://localhost:8080/actuator/health > /dev/null 2>&1; do
+while ! curl -f http://localhost:8082/actuator/health > /dev/null 2>&1; do
     echo "    Backend not ready yet, waiting..."
     sleep 5
 done
@@ -28,7 +28,7 @@ echo "  ✅ Backend is ready!"
 
 # Wait for Frontend to be ready
 echo "  - Checking Frontend..."
-while ! curl -f http://localhost:4200/ > /dev/null 2>&1; do
+while ! curl -f http://localhost:4201/ > /dev/null 2>&1; do
     echo "    Frontend not ready yet, waiting..."
     sleep 3
 done
@@ -38,10 +38,10 @@ echo ""
 echo "🎉 All services are running!"
 echo ""
 echo "📋 Service URLs:"
-echo "  • Frontend App: http://localhost:4200"
-echo "  • Backend API: http://localhost:8080"
-echo "  • Redis Commander: http://localhost:8081"
-echo "  • Health Check: http://localhost:8080/actuator/health"
+echo "  • Frontend App: http://localhost:4201"
+echo "  • Backend API: http://localhost:8082"
+echo "  • Redis Commander: http://localhost:8083"
+echo "  • Health Check: http://localhost:8082/actuator/health"
 echo ""
 echo "📊 Service Status:"
 docker-compose ps

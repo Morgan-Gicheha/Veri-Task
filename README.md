@@ -72,10 +72,10 @@ cd task-manager
 
 | Service | URL | Description |
 |---------|-----|-------------|
-| 🖥️ **Frontend** | http://localhost:4200 | Main application interface |
-| 🔧 **Backend API** | http://localhost:8080 | REST API endpoints |
-| 📊 **Redis Commander** | http://localhost:8081 | Database management UI |
-| 💚 **Health Check** | http://localhost:8080/actuator/health | Service status |
+| 🖥️ **Frontend** | http://localhost:4201 | Main application interface |
+| 🔧 **Backend API** | http://localhost:8082 | REST API endpoints |
+| 📊 **Redis Commander** | http://localhost:8083 | Database management UI |
+| 💚 **Health Check** | http://localhost:8082/actuator/health | Service status |
 
 ## 📡 API Documentation
 
@@ -139,7 +139,8 @@ Import the complete API collection: `Backend/Task-Manager-API.postman_collection
 ```bash
 cd Backend
 mvn spring-boot:run
-# Runs on http://localhost:8080
+# Runs on http://localhost:8080 (development)
+# Docker runs on http://localhost:8082 (to avoid conflicts)
 ```
 
 ### Frontend Development  
@@ -147,7 +148,8 @@ mvn spring-boot:run
 cd frontend/task-manager-frontend
 npm install
 ng serve
-# Runs on http://localhost:4200
+# Runs on http://localhost:4200 (development)
+# Docker runs on http://localhost:4201 (to avoid conflicts)
 ```
 
 ### Database Access
@@ -231,16 +233,16 @@ JWT_SECRET=your-super-secret-key
 JWT_EXPIRATION=86400000
 
 # CORS Configuration
-CORS_ALLOWED_ORIGINS=http://localhost:4200
+CORS_ALLOWED_ORIGINS=http://localhost:4201
 ```
 
 ### Docker Services
 ```yaml
 services:
-  redis:        # Database with persistence
-  backend:      # Spring Boot API (port 8080)
-  frontend:     # Angular + Nginx (port 4200) 
-  redis-commander: # Database GUI (port 8081)
+  redis:        # Database with persistence (port 6380)
+  backend:      # Spring Boot API (port 8082)
+  frontend:     # Angular + Nginx (port 4201) 
+  redis-commander: # Database GUI (port 8083)
 ```
 
 ## 🧪 Testing
@@ -277,7 +279,7 @@ services:
 
 | Issue | Solution |
 |-------|----------|
-| 🚫 **Port conflicts** | Stop services using ports 4200, 8080, 6379, 8081 |
+| 🚫 **Port conflicts** | Uses ports 4201, 8082, 6380, 8083 to avoid common conflicts |
 | 🐳 **Docker issues** | Run `docker-compose down && docker-compose up --build` |
 | 🔑 **JWT expired** | Re-login to get a fresh token |
 | 📡 **CORS errors** | Check `CORS_ALLOWED_ORIGINS` environment variable |
@@ -288,8 +290,8 @@ services:
 docker-compose ps
 
 # Individual service health
-curl http://localhost:8080/actuator/health  # Backend
-curl http://localhost:4200/                 # Frontend  
+curl http://localhost:8082/actuator/health  # Backend
+curl http://localhost:4201/                 # Frontend  
 docker-compose exec redis redis-cli ping    # Redis
 ```
 
@@ -326,14 +328,16 @@ docker-compose logs -f redis
 **Current Status**: ✅ **FULLY FUNCTIONAL**
 
 All components are working correctly:
-- ✅ Backend API responding on port 8080
-- ✅ Frontend UI accessible on port 4200  
-- ✅ Redis database operational with persistence
+- ✅ Backend API responding on port 8082
+- ✅ Frontend UI accessible on port 4201  
+- ✅ Redis database operational with persistence (port 6380)
+- ✅ Redis Commander available on port 8083
 - ✅ JWT authentication working
 - ✅ All CRUD operations tested
 - ✅ Docker containers healthy
 - ✅ Cross-origin requests configured
 - ✅ Data persistence verified
+- ✅ Port conflicts resolved
 
 ## 🤝 Contributing
 
