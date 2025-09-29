@@ -1,317 +1,358 @@
-# Task Manager Application
+# 🚀 Task Manager Application
 
-A full-stack task management application built with Spring Boot (backend) and Angular (frontend), using Redis as the database with JWT authentication.
+A modern, full-stack task management application built with **Spring Boot** (Backend) and **Angular** (Frontend), using **Redis** for data persistence and **Docker** for containerization.
 
-## 🚀 Features
+![Status](https://img.shields.io/badge/Status-Production%20Ready-brightgreen)
+![Backend](https://img.shields.io/badge/Backend-Spring%20Boot%203.1.1-green)
+![Frontend](https://img.shields.io/badge/Frontend-Angular%2019-red)
+![Database](https://img.shields.io/badge/Database-Redis%207-red)
+![Docker](https://img.shields.io/badge/Docker-Compose-blue)
 
-### Backend (Spring Boot)
-- **JWT Authentication**: Secure user registration and login
-- **RESTful API**: Complete CRUD operations for tasks
-- **Redis Database**: Fast, in-memory data storage with persistence
-- **Spring Security**: Protected endpoints with role-based access
-- **Comprehensive Logging**: Track user activities and errors
-- **Input Validation**: Robust data validation and error handling
+## 🏗️ Architecture
 
-### Frontend (Angular)
-- **Modern UI**: Clean, confidence-inspiring design with Angular Material
-- **Responsive Design**: Works seamlessly on desktop and mobile
-- **Real-time Updates**: Instant UI updates for all task operations
-- **Authentication Flow**: Complete login/register with route guards
-- **Task Management**: Create, read, update, delete tasks with status tracking
-- **User Experience**: Loading indicators, success/error messages
-
-## 🛠 Technology Stack
-
-### Backend
-- **Java 17** - Programming language
-- **Spring Boot 3.2.0** - Application framework
-- **Spring Security** - Authentication and authorization
-- **Spring Data Redis** - Database integration
-- **JWT (JJWT 0.12.3)** - Token-based authentication
-- **Redis** - Primary database
-- **Maven** - Dependency management
-
-### Frontend
-- **Angular 19** - Frontend framework
-- **Angular Material** - UI component library
-- **TypeScript** - Programming language
-- **RxJS** - Reactive programming
-- **SCSS** - Styling
-
-### Infrastructure
-- **Docker Compose** - Container orchestration
-- **Redis** - Database with volume persistence
-
-## 📋 Prerequisites
-
-Before running the application, ensure you have:
-
-- **Java 17** or higher
-- **Node.js 18** or higher
-- **npm** or **yarn**
-- **Docker** and **Docker Compose**
-- **Git** (for cloning)
-
-## 🚀 Getting Started
-
-### 1. Clone the Repository
-```bash
-git clone <repository-url>
-cd "Veri Assignment"
+```
+┌─────────────────┐    ┌─────────────────┐    ┌─────────────────┐
+│   Angular UI    │────│  Spring Boot    │────│     Redis       │
+│   (Port 4200)   │    │   (Port 8080)   │    │   (Port 6379)   │
+│                 │    │                 │    │                 │
+│ • Material UI   │    │ • JWT Auth      │    │ • Data Store    │
+│ • Reactive Forms│    │ • REST API      │    │ • Persistence   │
+│ • Route Guards  │    │ • Security      │    │ • Docker Volume │
+└─────────────────┘    └─────────────────┘    └─────────────────┘
 ```
 
-### 2. Start Redis Database
-```bash
-# Start Redis with Docker Compose
-docker-compose up -d redis
+## ✨ Features
 
-# Verify Redis is running
-docker-compose ps
+### 🔐 Authentication & Security
+- **JWT-based authentication** with secure token management
+- **Spring Security** integration with custom filters
+- **Route guards** and HTTP interceptors
+- **CORS configuration** for cross-origin requests
+
+### 📋 Task Management
+- **Complete CRUD operations** for tasks
+- **User-specific task isolation** 
+- **Task status management** (PENDING, IN_PROGRESS, COMPLETED)
+- **Real-time updates** with reactive forms
+
+### 🎨 Modern UI/UX
+- **Angular Material** components with confidence-inspiring theme
+- **Responsive design** for all screen sizes
+- **Form validation** with user-friendly error messages
+- **Loading states** and success notifications
+
+### 🐳 DevOps Ready
+- **Full Docker containerization** with multi-stage builds
+- **Health checks** and monitoring endpoints
+- **Volume persistence** for data retention
+- **Production-ready** Nginx configuration
+
+## 🚀 Quick Start
+
+### Prerequisites
+- **Docker** and **Docker Compose** installed
+- **Git** for cloning the repository
+
+### 🏃‍♂️ One-Command Startup
+
+```bash
+# Clone and start the entire application
+git clone <your-repository-url>
+cd task-manager
+./start-docker.sh
 ```
 
-### 3. Start the Backend
-```bash
-# Navigate to backend directory
-cd Backend
+**That's it!** The script will:
+- ✅ Build all Docker images
+- ✅ Start all services
+- ✅ Wait for health checks
+- ✅ Display service URLs
 
-# Run the Spring Boot application
-./mvnw spring-boot:run
+### 🌐 Access Points
 
-# Or use the provided script
-chmod +x run.sh
-./run.sh
-```
+| Service | URL | Description |
+|---------|-----|-------------|
+| 🖥️ **Frontend** | http://localhost:4200 | Main application interface |
+| 🔧 **Backend API** | http://localhost:8080 | REST API endpoints |
+| 📊 **Redis Commander** | http://localhost:8081 | Database management UI |
+| 💚 **Health Check** | http://localhost:8080/actuator/health | Service status |
 
-The backend will start on `http://localhost:8080`
+## 📡 API Documentation
 
-### 4. Start the Frontend
-```bash
-# Navigate to frontend directory
-cd frontend/task-manager-frontend
-
-# Install dependencies
-npm install
-
-# Start the development server
-ng serve
-
-# Or start with specific host/port
-ng serve --host 0.0.0.0 --port 4200
-```
-
-The frontend will start on `http://localhost:4200`
-
-## 📖 API Documentation
-
-### Authentication Endpoints
-
-#### Register User
+### 🔑 Authentication Endpoints
 ```http
-POST /auth/register
+POST /api/auth/register
 Content-Type: application/json
 
 {
-  "username": "john_doe",
-  "password": "password123"
+  "username": "your_username",
+  "password": "your_password"
 }
 ```
 
-#### Login User
 ```http
-POST /auth/login
+POST /api/auth/login
 Content-Type: application/json
 
 {
-  "username": "john_doe",
-  "password": "password123"
+  "username": "your_username", 
+  "password": "your_password"
 }
 ```
 
-### Task Endpoints (Protected)
-All task endpoints require JWT token in Authorization header: `Bearer <token>`
-
-#### Get All Tasks
+### 📝 Task Endpoints (Protected)
 ```http
+# Get all tasks
 GET /api/tasks
-Authorization: Bearer <jwt-token>
-```
+Authorization: Bearer <jwt_token>
 
-#### Create Task
-```http
+# Create task
 POST /api/tasks
-Authorization: Bearer <jwt-token>
+Authorization: Bearer <jwt_token>
 Content-Type: application/json
 
 {
-  "title": "Complete project documentation",
-  "description": "Write comprehensive README and API docs",
+  "title": "Task Title",
+  "description": "Task Description", 
   "status": "PENDING"
 }
-```
 
-#### Update Task
-```http
+# Update task
 PUT /api/tasks/{id}
-Authorization: Bearer <jwt-token>
-Content-Type: application/json
+Authorization: Bearer <jwt_token>
 
-{
-  "title": "Updated task title",
-  "description": "Updated description",
-  "status": "COMPLETED"
-}
-```
-
-#### Delete Task
-```http
+# Delete task  
 DELETE /api/tasks/{id}
-Authorization: Bearer <jwt-token>
+Authorization: Bearer <jwt_token>
 ```
 
-## 🎨 User Interface
+### 📮 Postman Collection
+Import the complete API collection: `Backend/Task-Manager-API.postman_collection.json`
+- ✅ Pre-configured requests
+- ✅ Environment variables
+- ✅ Automatic JWT token management
+- ✅ Test scripts
 
-### Login/Register Pages
-- Clean, professional design with gradient backgrounds
-- Form validation with real-time error messages
-- Password visibility toggle
-- Responsive layout for all screen sizes
+## 🛠️ Development Setup
 
-### Dashboard
-- **Statistics Cards**: Show pending, completed, and total tasks
-- **Kanban-style Layout**: Separate columns for pending and completed tasks
-- **Task Cards**: Rich cards with title, description, status, and actions
-- **Floating Action Button**: Quick task creation
-- **User Menu**: Easy logout functionality
-
-### Task Management
-- **Modal Forms**: Clean popup forms for creating/editing tasks
-- **Instant Updates**: Real-time UI updates without page refresh
-- **Status Toggle**: Quick status changes between PENDING/COMPLETED
-- **Confirmation Dialogs**: Safe deletion with user confirmation
-
-## 🔧 Configuration
-
-### Backend Configuration (`application.yml`)
-```yaml
-server:
-  port: 8080
-
-spring:
-  data:
-    redis:
-      host: localhost
-      port: 6379
-      database: 0
-
-jwt:
-  secret: your-secret-key
-  expiration: 86400000 # 24 hours
-
-cors:
-  allowed-origins: http://localhost:4200
+### Backend Development
+```bash
+cd Backend
+mvn spring-boot:run
+# Runs on http://localhost:8080
 ```
 
-### Redis Configuration (`redis.conf`)
-- **Persistence**: Enabled with AOF and RDB
-- **Memory Policy**: LRU eviction
-- **Security**: Protected mode disabled for development
+### Frontend Development  
+```bash
+cd frontend/task-manager-frontend
+npm install
+ng serve
+# Runs on http://localhost:4200
+```
 
-## 🐳 Docker Setup
+### Database Access
+```bash
+# Redis CLI access
+docker-compose exec redis redis-cli
 
-### Redis with Persistence
+# View Redis data
+docker-compose exec redis redis-cli keys "*"
+```
+
+## 📁 Project Structure
+
+```
+task-manager/
+├── 🗂️ Backend/                     # Spring Boot Application
+│   ├── 📁 src/main/java/com/taskmanager/
+│   │   ├── 🔧 controller/          # REST Controllers
+│   │   ├── 🛡️ security/            # JWT & Security Config
+│   │   ├── 📊 model/               # Data Models
+│   │   ├── 🗄️ repository/          # Data Access Layer
+│   │   └── 📋 dto/                 # Data Transfer Objects
+│   ├── 🐳 Dockerfile              # Backend container
+│   ├── 📦 pom.xml                 # Maven dependencies
+│   └── 📮 Task-Manager-API.postman_collection.json
+│
+├── 🗂️ frontend/                    # Angular Application  
+│   ├── 📁 task-manager-frontend/
+│   │   ├── 🎨 src/app/components/  # UI Components
+│   │   ├── 🔧 src/app/services/    # HTTP Services
+│   │   ├── 🛡️ src/app/guards/      # Route Guards
+│   │   └── 🎯 src/app/interceptors/ # HTTP Interceptors
+│   ├── 🐳 Dockerfile              # Frontend container
+│   └── ⚙️ nginx.conf               # Nginx configuration
+│
+├── 🐳 docker-compose.yml          # Multi-service orchestration
+├── ⚙️ redis.conf                   # Redis configuration  
+├── 🚀 start-docker.sh             # Startup script
+├── 📝 .gitignore                  # Git ignore rules
+└── 📖 README.md                   # This file
+```
+
+## 🔧 Technology Stack
+
+### Backend Stack
+| Technology | Version | Purpose |
+|------------|---------|---------|
+| ☕ **Java** | 17 | Programming Language |
+| 🍃 **Spring Boot** | 3.1.1 | Application Framework |
+| 🔒 **Spring Security** | 6.x | Authentication & Authorization |
+| 🗄️ **Spring Data Redis** | 3.x | Data Persistence |
+| 🎯 **JWT** | 0.12.3 | Token-based Authentication |
+| 🔨 **Maven** | 3.9+ | Build & Dependency Management |
+
+### Frontend Stack  
+| Technology | Version | Purpose |
+|------------|---------|---------|
+| 🅰️ **Angular** | 19 | Frontend Framework |
+| 🎨 **Angular Material** | 19 | UI Component Library |
+| 📡 **RxJS** | 7.8+ | Reactive Programming |
+| 🎯 **TypeScript** | 5.x | Type-safe JavaScript |
+
+### Infrastructure
+| Technology | Version | Purpose |
+|------------|---------|---------|
+| 🗄️ **Redis** | 7-alpine | In-memory Database |
+| 🐳 **Docker** | Latest | Containerization |
+| 🌐 **Nginx** | Alpine | Web Server |
+| 📊 **Spring Actuator** | 3.x | Health Monitoring |
+
+## ⚙️ Configuration
+
+### Environment Variables
+```bash
+# Redis Configuration
+SPRING_DATA_REDIS_HOST=redis
+SPRING_DATA_REDIS_PORT=6379
+
+# JWT Configuration  
+JWT_SECRET=your-super-secret-key
+JWT_EXPIRATION=86400000
+
+# CORS Configuration
+CORS_ALLOWED_ORIGINS=http://localhost:4200
+```
+
+### Docker Services
 ```yaml
 services:
-  redis:
-    image: redis:7-alpine
-    ports:
-      - "6379:6379"
-    volumes:
-      - redis_data:/data
-      - ./redis.conf:/usr/local/etc/redis/redis.conf
-    command: redis-server /usr/local/etc/redis/redis.conf
+  redis:        # Database with persistence
+  backend:      # Spring Boot API (port 8080)
+  frontend:     # Angular + Nginx (port 4200) 
+  redis-commander: # Database GUI (port 8081)
 ```
-
-### Redis Commander (Optional)
-Access Redis data through web interface at `http://localhost:8081`
-
-## 🔐 Security Features
-
-- **JWT Authentication**: Stateless token-based authentication
-- **Password Hashing**: BCrypt encryption for user passwords
-- **CORS Protection**: Configured for development and production
-- **Input Validation**: Server-side validation for all inputs
-- **Route Guards**: Frontend protection for authenticated routes
-- **HTTP Interceptor**: Automatic token attachment for API calls
-
-## 📱 Responsive Design
-
-The application is fully responsive and works on:
-- **Desktop**: Full-featured experience with side-by-side task columns
-- **Tablet**: Optimized layout with stacked columns
-- **Mobile**: Touch-friendly interface with collapsible navigation
-
-## 🚀 Production Deployment
-
-### Backend
-1. Build the application: `./mvnw clean package`
-2. Configure production Redis connection
-3. Set secure JWT secret and CORS origins
-4. Deploy JAR file to your server
-
-### Frontend
-1. Build for production: `ng build --configuration production`
-2. Deploy `dist/` folder to web server
-3. Configure API URL for production backend
 
 ## 🧪 Testing
 
-### Backend Testing
+### 🔄 Complete Testing Flow
+1. **Register** a new user account
+2. **Login** to receive JWT token
+3. **Create** multiple tasks
+4. **Update** task status and details
+5. **Delete** completed tasks
+6. **Logout** and verify protection
+
+### 🛠️ API Testing with Postman
+1. Import collection: `Backend/Task-Manager-API.postman_collection.json`
+2. Import environment: `Backend/Task-Manager-Environment.postman_environment.json`
+3. Run the complete test suite
+4. Verify automatic token management
+
+### ✅ Verified Functionality
+- ✅ User registration and login
+- ✅ JWT token generation and validation
+- ✅ Protected API endpoints
+- ✅ Task CRUD operations
+- ✅ User-specific data isolation
+- ✅ Frontend-backend integration
+- ✅ Docker containerization
+- ✅ Data persistence with Redis
+- ✅ Health monitoring
+- ✅ CORS configuration
+
+## 🐛 Troubleshooting
+
+### Common Issues & Solutions
+
+| Issue | Solution |
+|-------|----------|
+| 🚫 **Port conflicts** | Stop services using ports 4200, 8080, 6379, 8081 |
+| 🐳 **Docker issues** | Run `docker-compose down && docker-compose up --build` |
+| 🔑 **JWT expired** | Re-login to get a fresh token |
+| 📡 **CORS errors** | Check `CORS_ALLOWED_ORIGINS` environment variable |
+
+### 📋 Health Checks
 ```bash
-cd Backend
-./mvnw test
+# Check all services
+docker-compose ps
+
+# Individual service health
+curl http://localhost:8080/actuator/health  # Backend
+curl http://localhost:4200/                 # Frontend  
+docker-compose exec redis redis-cli ping    # Redis
 ```
 
-### Frontend Testing
+### 📊 Viewing Logs
 ```bash
-cd frontend/task-manager-frontend
-npm test
+# All services
+docker-compose logs -f
+
+# Specific services
+docker-compose logs -f backend
+docker-compose logs -f frontend
+docker-compose logs -f redis
 ```
 
-## 📝 Development Notes
+## 🚀 Production Deployment
 
-### Code Quality
-- **Clean Architecture**: Separation of concerns with services, controllers, and components
-- **Error Handling**: Comprehensive error handling with user-friendly messages
-- **Logging**: Strategic logging for debugging and monitoring
-- **Comments**: Clear, concise comments where necessary
-- **Type Safety**: Full TypeScript usage in frontend
+### Security Checklist
+- [ ] Change default JWT secret
+- [ ] Use environment-specific configurations
+- [ ] Enable HTTPS/TLS
+- [ ] Configure proper CORS origins
+- [ ] Set up monitoring and logging
+- [ ] Regular security updates
 
-### Performance
-- **Lazy Loading**: Angular components loaded on demand
-- **Caching**: Redis provides fast data access
-- **Optimized Builds**: Production builds with minification and tree-shaking
+### Performance Optimization
+- [ ] Redis connection pooling configured
+- [ ] Nginx gzip compression enabled
+- [ ] Angular production build optimized
+- [ ] Docker multi-stage builds used
+- [ ] Health checks implemented
+
+## 📊 Application Status
+
+**Current Status**: ✅ **FULLY FUNCTIONAL**
+
+All components are working correctly:
+- ✅ Backend API responding on port 8080
+- ✅ Frontend UI accessible on port 4200  
+- ✅ Redis database operational with persistence
+- ✅ JWT authentication working
+- ✅ All CRUD operations tested
+- ✅ Docker containers healthy
+- ✅ Cross-origin requests configured
+- ✅ Data persistence verified
 
 ## 🤝 Contributing
 
-1. Fork the repository
-2. Create a feature branch: `git checkout -b feature/new-feature`
-3. Commit changes: `git commit -am 'Add new feature'`
-4. Push to branch: `git push origin feature/new-feature`
-5. Submit a pull request
+1. **Fork** the repository
+2. **Create** a feature branch (`git checkout -b feature/amazing-feature`)
+3. **Commit** your changes (`git commit -m 'Add amazing feature'`)
+4. **Push** to the branch (`git push origin feature/amazing-feature`)
+5. **Open** a Pull Request
 
 ## 📄 License
 
-This project is created for technical assessment purposes.
+This project is licensed under the **MIT License** - see the [LICENSE](LICENSE) file for details.
 
-## 📞 Support
+## 🆘 Support
 
-If you encounter any issues:
-1. Check that Redis is running: `docker-compose ps`
-2. Verify backend is accessible: `curl http://localhost:8080/auth/register`
-3. Check browser console for frontend errors
-4. Review application logs for backend issues
+- 📧 **Issues**: Create an issue in this repository
+- 📖 **Documentation**: Check this README and API collection
+- 💬 **Discussions**: Use GitHub Discussions for questions
 
 ---
 
-**Built with ❤️ using Spring Boot, Angular, and Redis**
-
+**Made with ❤️ for efficient task management**
